@@ -3,7 +3,8 @@
 #include <algorithm>
 using namespace std;
 
-class Solution {
+class Solution
+{
 private:
     void gensubsets(vector< vector<int> > &ans, vector<int> &flag, vector<int> &nums)
     {
