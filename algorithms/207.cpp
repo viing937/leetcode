@@ -24,7 +24,7 @@ public:
         for ( auto it = prerequisites.begin(); it != prerequisites.end(); it++ )
             graph[it->first].push_back(it->second);
         for ( int i = 0; i < numCourses; i++ )
-            if ( visited[i] == 0 && dfs(graph, visited, i) )
+            if ( !visited[i] && dfs(graph, visited, i) )
                 return false;
         return true;
     }
