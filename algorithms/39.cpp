@@ -9,13 +9,14 @@ private:
     void dfs(vector< vector<int> > &result, vector<int> &combination, vector<int> &candidates, int index, int target)
     {
         if ( target == 0 )
-            result.push_back(combination);
-        else if ( index < (int)candidates.size() && target >= candidates[index] )
         {
-            dfs(result, combination, candidates, index+1, target);
-            combination.push_back(candidates[index]);
-            dfs(result, combination, candidates, index, target-candidates[index]);
-            dfs(result, combination, candidates, index+1, target-candidates[index]);
+            result.push_back(combination);
+            return;
+        }
+        for ( unsigned int i = index; i < candidates.size() && target >= candidates[i]; i++ )
+        {
+            combination.push_back(candidates[i]);
+            dfs(result, combination, candidates, i, target-candidates[i]);
             combination.pop_back();
         }
         return;
@@ -27,8 +28,6 @@ public:
         vector<int> combination;
         sort(candidates.begin(), candidates.end());
         dfs(result, combination, candidates, 0, target);
-        sort(result.begin(), result.end());
-        result.erase(unique(result.begin(), result.end()), result.end());
         return result;
     }
 };
