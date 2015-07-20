@@ -4,19 +4,27 @@ using namespace std;
 
 class Solution
 {
+private:
+    bool dfs(vector< vector<int> > &graph, vector<bool> &visited, int node)
+    {
+        if ( visited[node] )
+            return true;
+        visited[node] = true;
+        for ( auto it = graph[node].begin(); it != graph[node].end(); it++ )
+            if ( dfs(graph, visited, *it) )
+                return true;
+        visited[node] = false;
+        return false;
+    }
 public:
     bool canFinish(int numCourses, vector< pair<int, int> >& prerequisites)
     {
-        vector< vector<bool> > graph(numCourses, vector<bool>(numCourses, false));
+        vector< vector<int> > graph(numCourses);
+        vector<bool> visited(numCourses, false);
         for ( auto it = prerequisites.begin(); it != prerequisites.end(); it++ )
-            graph[it->first][it->second] = true;
-        for ( int k = 0; k < numCourses; k++ )
-            for ( int i = 0; i < numCourses; i++ )
-                for ( int j = 0; j < numCourses; j++ )
-                    if ( graph[i][k] && graph[k][j] )
-                        graph[i][j] = true;
+            graph[it->first].push_back(it->second);
         for ( int i = 0; i < numCourses; i++ )
-            if ( graph[i][i] )
+            if ( dfs(graph, visited, i) )
                 return false;
         return true;
     }
