@@ -25,7 +25,7 @@ public:
                     continue;
                 jIt->second -= 1;
                 auto kIt = counter.find(-(iIt->first + jIt->first));
-                if ( kIt != counter.end() &&  kIt->first >= jIt->first && kIt->second > 0 )
+                if ( kIt != counter.end() && kIt->first >= jIt->first && kIt->second > 0 )
                 {
                     ans[0] = iIt->first, ans[1] = jIt->first, ans[2] = kIt->first;
                     result.push_back(ans);
