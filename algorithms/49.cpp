@@ -9,7 +9,6 @@ class Solution
 public:
     vector< vector<string> > groupAnagrams(vector<string>& strs)
     {
-        sort(strs.begin(), strs.end());
         vector< vector<string> > result;
         unordered_map< string, int > mp;
         for ( unsigned int i = 0; i < strs.size(); ++i )
@@ -25,6 +24,8 @@ public:
                 result.push_back(vector<string>(1, strs[i]));
             }
         }
+        for ( unsigned int i = 0; i < result.size(); ++i )
+            sort(result[i].begin(), result[i].end());
         return result;
     }
 };
