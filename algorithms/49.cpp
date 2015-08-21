@@ -19,15 +19,12 @@ public:
     vector< vector<string> > groupAnagrams(vector<string>& strs)
     {
         map< map<char, int>, vector<string> > result;
-        int len = strs.size();
-        for ( int i = 0; i < len; ++i )
+        sort(strs.begin(), strs.end());
+        for ( int i = 0; i < (int)strs.size(); ++i )
             result[hashstring(strs[i])].push_back(strs[i]);
         vector< vector<string> > ans;
         for ( auto it = result.begin(); it != result.end(); ++it )
-        {
-            sort((it->second).begin(), (it->second).end());
             ans.push_back(it->second);
-        }
         return ans;
     }
 };
