@@ -7,20 +7,17 @@ using namespace std;
 class Solution
 {
 private:
-    map<char, int> hashstring(string &s)
+    string hashstring(string s)
     {
-        map<char, int> hash;
-        int len = s.size();
-        for ( int i = 0; i < len; ++i )
-            hash[s[i]] += 1;
-        return hash;
+        sort(s.begin(), s.end());
+        return s;
     }
 public:
     vector< vector<string> > groupAnagrams(vector<string>& strs)
     {
-        map< map<char, int>, vector<string> > result;
+        map< string, vector<string> > result;
         sort(strs.begin(), strs.end());
-        for ( int i = 0; i < (int)strs.size(); ++i )
+        for ( unsigned int i = 0; i < strs.size(); ++i )
             result[hashstring(strs[i])].push_back(strs[i]);
         vector< vector<string> > ans;
         for ( auto it = result.begin(); it != result.end(); ++it )
