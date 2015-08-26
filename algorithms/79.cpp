@@ -5,33 +5,22 @@ using namespace std;
 class Solution
 {
 private:
-    bool dfs(vector< vector<char> > &board, string &word, vector< vector<bool> > &visited, int x, int y, int cur)
+    int dx[4] = {+1, -1, 0, 0}, dy[4] = {0, 0, +1, -1};
+    bool dfs(vector< vector<char> > &board, string &word, int x, int y, int cur)
     {
         if ( cur == (int)word.size() )
             return true;
-        if ( x+1 < (int)board.size() && !visited[x+1][y] && board[x+1][y] == word[cur] )
+        for ( int i = 0; i < 4; ++i )
         {
-            visited[x+1][y] = true;
-            if ( dfs(board, word, visited, x+1, y, cur+1) ) return true;
-            visited[x+1][y] = false;
-        }
-        if ( x-1 >= 0 && !visited[x-1][y] && board[x-1][y] == word[cur] )
-        {
-            visited[x-1][y] = true;
-            if ( dfs(board, word, visited, x-1, y, cur+1) ) return true;
-            visited[x-1][y] = false;
-        }
-        if ( y+1 < (int)board[0].size() && !visited[x][y+1] && board[x][y+1] == word[cur] )
-        {
-            visited[x][y+1] = true;
-            if ( dfs(board, word, visited, x, y+1, cur+1) ) return true;
-            visited[x][y+1] = false;
-        }
-        if ( y-1 >= 0 && !visited[x][y-1] && board[x][y-1] == word[cur] )
-        {
-            visited[x][y-1] = true;
-            if ( dfs(board, word, visited, x, y-1, cur+1) ) return true;
-            visited[x][y-1] = false;
+            if ( x+dx[i] >= 0 && x+dx[i] < (int)board.size() &&
+                 y+dy[i] >= 0 && y+dy[i] < (int)board[0].size() &&
+                 board[x+dx[i]][y+dy[i]] == word[cur] )
+            {
+                board[x+dx[i]][y+dy[i]] = 0;
+                bool res = dfs(board, word, x+dx[i], y+dy[i], cur+1);
+                board[x+dx[i]][y+dy[i]] = word[cur];
+                if ( res ) return true;
+            }
         }
         return false;
     }
@@ -41,14 +30,14 @@ public:
         if ( board.size() == 0 || board[0].size() == 0 )
             return false;
         int m = board.size(), n = board[0].size();
-        vector< vector<bool> > visited(m, vector<bool>(n, false));
         for ( int i = 0; i < m; ++i )
             for ( int j = 0; j < n; ++j )
                 if ( board[i][j] == word[0] )
                 {
-                    visited[i][j] = true;
-                    if ( dfs(board, word, visited, i, j, 1) ) return true;
-                    visited[i][j] = false;
+                    board[i][j] = 0;
+                    bool res = dfs(board, word, i, j, 1);
+                    board[i][j] = word[0];
+                    if ( res ) return true;
                 }
         return false;
     }

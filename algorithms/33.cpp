@@ -11,22 +11,21 @@ public:
         while ( l <= r )
         {
             int m = (l+r)/2;
-            if ( target < nums[m] )
+            if ( nums[m] == target ) return m;
+            else if ( target < nums[m] )
             {
-                if ( nums[l] < nums[r] || nums[m] < nums[l] || target > nums[r] )
+                if ( nums[l] <= target || nums[m] < nums[l] )
                     r = m-1;
                 else
                     l = m+1;
-            }
-            else if ( target > nums[m] )
-            {
-                if ( nums[l] < nums[r] || nums[m] > nums[l] || target < nums[l] )
-                    l = m+1;
-                else
-                    r = m-1;
             }
             else
-                return m;
+            {
+                if ( nums[l] > target || nums[m] >= nums[l] )
+                    l = m+1;
+                else
+                    r = m-1;
+            }
         }
         return -1;
     }
