@@ -9,27 +9,15 @@ struct ListNode
 
 bool hasCycle(struct ListNode *head)
 {
-    struct ListNode *p1 = head;
-    if ( p1 == NULL )
+    if ( head == NULL || head->next == NULL )
         return false;
-    p1 = p1->next;
-    struct ListNode *p2 = p1;
-    if ( p2 == NULL )
-        return false;
-    p2 = p2->next;
-    while ( p1 != p2 )
+    struct ListNode *slow = head->next, *fast = slow->next;
+    while ( slow != fast && fast && fast->next )
     {
-        if ( p1 == NULL )
-            return false;
-        p1 = p1->next;
-        if ( p2 == NULL )
-            return false;
-        p2 = p2->next;
-        if ( p2 == NULL )
-            return false;
-        p2 = p2->next;
+        slow = slow->next;
+        fast = fast->next->next;
     }
-    return true;
+    return slow == fast;
 }
 
 int main()
