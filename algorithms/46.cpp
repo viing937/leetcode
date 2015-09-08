@@ -4,6 +4,7 @@ using namespace std;
 
 class Solution
 {
+private:
     void dfs(vector<int> &nums, vector< vector<int> > &result, vector<int> &per, vector<bool> &visited)
     {
         if ( per.size() == nums.size() )
