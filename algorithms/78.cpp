@@ -6,41 +6,33 @@ using namespace std;
 class Solution
 {
 private:
-    void gensubsets(vector< vector<int> > &ans, vector<int> &flag, vector<int> &nums)
+    void gensubsets(vector< vector<int> > &result, vector<int> &subset, vector<int> &nums, int start)
     {
-        if ( flag.size() > nums.size() )
+        if ( start >= (int)nums.size() )
             return;
-        vector<int> subset;
-        for ( unsigned int i = 0; i < flag.size(); i++ )
-            if ( flag[i] )
-                subset.push_back(nums[i]);
-        if ( ans.empty() || subset != ans.back() )
-            ans.push_back(subset);
-        flag.push_back(0);
-        gensubsets(ans, flag, nums);
-        flag.pop_back();
-        flag.push_back(1);
-        gensubsets(ans, flag, nums);
-        flag.pop_back();
+        for ( int i = start; i < (int)nums.size(); ++i )
+        {
+            subset.push_back(nums[i]);
+            result.push_back(subset);
+            gensubsets(result, subset, nums, i+1);
+            subset.pop_back();
+        }
         return;
     }
 public:
     vector< vector<int> > subsets(vector<int>& nums)
     {
         sort(nums.begin(), nums.end());
-        vector< vector<int> > ans;
-        vector<int> flag;
-        gensubsets(ans, flag, nums);
-        return ans;
+        vector< vector<int> > result(1, vector<int>());
+        vector<int> subset;
+        gensubsets(result, subset, nums, 0);
+        return result;
     } 
 };
 
 int main()
 {
-    vector<int> nums;
-    nums.push_back(4);
-    nums.push_back(1);
-    nums.push_back(0);
+    vector<int> nums = {4, 1, 0};
     Solution solution;
     vector< vector<int> > ans = solution.subsets(nums);
     for ( unsigned int i = 0; i < ans.size(); i++ )
