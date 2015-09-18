@@ -1,3 +1,3 @@
-select Salary from Employee group by Salary 
-union all (select null)
-order by Salary desc limit 1,1
+SELECT Salary FROM Employee GROUP BY Salary 
+UNION ALL (SELECT null)
+ORDER BY Salary DESC LIMIT 1,1
