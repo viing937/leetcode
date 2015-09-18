@@ -1,3 +1,3 @@
-SELECT Salary FROM Employee GROUP BY Salary 
+SELECT DISTINCT Salary FROM Employee
 UNION ALL (SELECT null)
 ORDER BY Salary DESC LIMIT 1,1
