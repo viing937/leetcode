@@ -4,7 +4,7 @@ BEGIN
     SET M=N-1;
     RETURN (
         SELECT DISTINCT Salary FROM Employee
-        UNION ALL (SELECT null)
+        UNION ALL (SELECT NULL)
         ORDER BY Salary DESC LIMIT M,1
     );
 END
