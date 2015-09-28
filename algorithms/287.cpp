@@ -8,10 +8,22 @@ class Solution
 public:
     int findDuplicate(vector<int>& nums)
     {
-        sort(nums.begin(), nums.end());
-        for ( unsigned int i = 1; i < nums.size(); ++i )
-            if ( nums[i] == nums[i-1] )
-                return nums[i];
+        int slow = nums.size()-1, fast = slow;
+        while ( true )
+        {
+            slow = nums[slow]-1;
+            fast = nums[nums[fast]-1]-1;
+            if ( slow == fast )
+                break;
+        }
+        fast = nums.size()-1;
+        while ( true )
+        {
+            slow = nums[slow]-1;
+            fast = nums[fast]-1;
+            if ( slow == fast )
+                return slow+1;
+        }
     }
 };
 
