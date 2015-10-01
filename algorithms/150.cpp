@@ -11,40 +11,20 @@ public:
         stack<int> s;
         for ( auto item : tokens )
         {
-            if ( item == "+" )
-            {
-                int a = s.top();
-                s.pop();
-                int b = s.top();
-                s.pop();
-                s.push(b+a);
-            }
-            else if ( item == "-" )
-            {
-                int a = s.top();
-                s.pop();
-                int b = s.top();
-                s.pop();
-                s.push(b-a);
-            }
-            else if ( item == "*" )
-            {
-                int a = s.top();
-                s.pop();
-                int b = s.top();
-                s.pop();
-                s.push(b*a);
-            }
-            else if ( item == "/" )
-            {
-                int a = s.top();
-                s.pop();
-                int b = s.top();
-                s.pop();
-                s.push(b/a);
-            }
-            else
+            if ( item.size() > 1 || isdigit(item[0]) )
                 s.push(stoi(item));
+            else
+            {
+                int b = s.top(); s.pop();
+                int a = s.top(); s.pop();
+                switch ( item[0] )
+                {
+                    case '+': s.push(a+b); break;
+                    case '-': s.push(a-b); break;
+                    case '*': s.push(a*b); break;
+                    case '/': s.push(a/b); break;
+                }
+            }
         }
         return s.top();
     }
