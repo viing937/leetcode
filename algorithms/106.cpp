@@ -19,7 +19,11 @@ private:
         if ( l_in >= r_in )
             return NULL;
         TreeNode *root = new TreeNode(postorder[r_post-1]);
-        int len_left = find(inorder.begin()+l_in, inorder.begin()+r_in, root->val)-inorder.begin()-l_in;
+
+        int len_left;
+        for ( len_left = 0; l_in+len_left < r_in; ++len_left )
+            if ( inorder[l_in+len_left] == root->val )
+                break;
 
         root->left = helper(inorder, l_in, l_in+len_left, postorder, l_post, l_post+len_left);
         root->right = helper(inorder, l_in+len_left+1, r_in, postorder, l_post+len_left, r_post-1);
