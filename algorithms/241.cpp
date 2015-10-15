@@ -12,16 +12,16 @@ private:
         if ( find_if_not(input.begin()+start, input.begin()+end, (int(*)(int))std::isdigit) == input.begin()+end )
         {
             int t = 0;
-            for ( int i = start; i <= end; ++i )
+            for ( int i = start; i < end; ++i )
                 t = t*10+input[i]-'0';
             product.push_back(t);
             return product;
         }
-        for ( int i = start; i <= end; ++i )
+        for ( int i = start; i < end; ++i )
         {
-            if ( input[i] != '+' && input[i] != '-' && input[i] != '*' )
+            if ( isdigit(input[i]) )
                 continue;
-            auto left = cal(start, i-1, input),
+            auto left = cal(start, i, input),
                  right = cal(i+1, end, input);
             for ( auto left_item : left )
             {
@@ -41,7 +41,7 @@ private:
 public:
     vector<int> diffWaysToCompute(string input)
     {
-        return cal(0, input.size()-1, input);
+        return cal(0, input.size(), input);
     }
 };
 
