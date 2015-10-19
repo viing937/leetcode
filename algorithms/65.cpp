@@ -1,12 +1,12 @@
 #include <iostream>
 #include <vector>
-#include <map>
+#include <unordered_map>
 using namespace std;
 
 class Solution
 {
 private:
-    map<char, int> hash_char;
+    unordered_map<char, int> hash_char;
     vector< vector<int> > state_transition;
 public:
     Solution()
