@@ -5,22 +5,10 @@ using namespace std;
 class Solution {
 private:
     vector<string> result;
-    vector<long long> sign;
-    vector< vector<long long> > nums;
 
-    void dfs(const string &num, int pos, long long target, long long sum, long long product) {
+    void dfs(const string &num, int pos, long long target, string cur, long long sum, long long product) {
         if (pos >= num.size() && sum + product == target) {
-            result.push_back("");
-            int n = nums.size();
-            for (int i = 0; i < n; i++) {
-                if (i != 0)
-                    result.back() += (sign[i]>0?"+":"-") + to_string(nums[i][0]);
-                else
-                    result.back() += to_string(nums[i][0]);
-
-                for (int j = 1; j < nums[i].size(); j++)
-                    result.back() += "*" + to_string(nums[i][j]);
-            }
+            result.push_back(cur.substr(1));
             return;
         }
         for (int i = pos+1; i <= num.size(); i++) {
@@ -30,35 +18,23 @@ private:
                 break;
 
             // +
-            nums.push_back(vector<long long>(1, now));
-            sign.push_back(1);
-            dfs(num, i, target, sum+product, now);
-            nums.pop_back();
-            sign.pop_back();
+            dfs(num, i, target, cur + "+" + t, sum+product, now);
 
-            if (nums.size() == 0)
+            if (pos == 0)
                 continue;
 
             // -
-            nums.push_back(vector<long long>(1, now));
-            sign.push_back(-1);
-            dfs(num, i, target, sum+product, -now);
-            nums.pop_back();
-            sign.pop_back();
+            dfs(num, i, target, cur + "-" + t, sum+product, -now);
 
             // *
-            nums.back().push_back(now);
-            dfs(num, i, target, sum, product*now);
-            nums.back().pop_back();
+            dfs(num, i, target, cur + "*" + t, sum, product*now);
         }
     }
 public:
     vector<string> addOperators(string num, int target) {
         result.clear();
-        sign.clear();
-        nums.clear();
 
-        dfs(num, 0, target, 0, 0);
+        dfs(num, 0, target, "", 0, 0);
 
         return result;
     }
