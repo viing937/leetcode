@@ -27,16 +27,12 @@ private:
             const string &word = words[i];
             p = trie;
             for (int j = word.size()-1; j >= 0; j--) {
-                if (!p) {
-                    p = new TrieNode();
-                    pr->next[word[j+1]-'a'] = p;
-                }
                 pr = p;
                 p = p->next[word[j]-'a'];
-            }
-            if (!p) {
-                p = new TrieNode();
-                pr->next[word[0]-'a'] = p;
+                if (!p) {
+                    p = new TrieNode();
+                    pr->next[word[j]-'a'] = p;
+                }
             }
             p->idx = i;
         }
