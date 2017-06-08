@@ -4,27 +4,37 @@
 using namespace std;
 
 class Solution {
-public:
-    bool isValid(string code) {
-        int pos;
-
-        pos = code.find("<![CDATA[");
+private:
+    void escapeCDATA(string &code) {
+        int pos = code.find("<![CDATA[");
         while (pos != string::npos) {
             int close = code.find("]]>", pos);
             if (close == string::npos)
-                return false;
+                return;
             code.replace(pos, close-pos+3, "CDATA");
             pos = code.find("<![CDATA[");
         }
-
+        return;
+    }
+    bool isValidTagName(const string &tag) {
+        if (tag.size() < 1 || tag.size() > 9)
+            return false;
+        for (auto ch: tag)
+            if (ch < 'A' || ch > 'Z')
+                return false;
+        return true;
+    }
+public:
+    bool isValid(string code) {
+        escapeCDATA(code);
         if (code.size() == 0 || code[0] != '<' || code.back() != '>')
             return false;
 
-        pos = 0;
+        int pos = 0;
+        bool isClosed = false;
         stack<string> tags;
-        int cnt = 0;
         while (pos < code.size()) {
-            if (cnt == 1)
+            if (isClosed)
                 return false;
             if (code[pos] != '<') {
                 pos += 1;
@@ -35,11 +45,8 @@ public:
                 return false;
             if (code[pos+1] != '/') {
                 string tag = code.substr(pos+1, close-pos-1);
-                if (tag.size() < 1 || tag.size() > 9)
+                if (!isValidTagName(tag))
                     return false;
-                for (auto ch: tag)
-                    if (ch < 'A' || ch > 'Z')
-                        return false;
                 tags.push(tag);
             }
             else {
@@ -47,11 +54,11 @@ public:
                 if (tags.empty() || tags.top() != tag)
                     return false;
                 tags.pop();
-                cnt += tags.empty() ? 1 : 0;
+                isClosed = tags.empty() ? true : false;
             }
             pos = close + 1;
         }
-        return cnt==1 ? true : false;
+        return isClosed;
     }
 };
 
