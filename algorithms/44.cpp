@@ -9,20 +9,17 @@ public:
             if ((p < pattern.size() && pattern[p] == '?') || str[s] == pattern[p]) {
                 s += 1;
                 p += 1;
-                continue;
             }
-            if (p < pattern.size() && pattern[p] == '*') {
+            else if (p < pattern.size() && pattern[p] == '*') {
                 match = s;
                 starIdx = p;
                 p += 1;
-                continue;
             }
-            if (starIdx != -1) {
+            else if (starIdx != -1) {
                 p = starIdx+1;
                 s = match = match+1;
-                continue;
             }
-            return false;
+            else return false;
         }
         while (p < pattern.size())
             if (pattern[p++] != '*')
