@@ -1,23 +1,19 @@
 #include <iostream>
-#include <unordered_map>
+#include <vector>
 using namespace std;
 
 class Solution {
-private:
-    unordered_map<int, unordered_map<int, int>> m;
-    int helper(int left, int right) {
-        if (left >= right) return 0;
-        if (m[left].find(right) != m[left].end()) return m[left][right];
-        int result = INT32_MAX;
-        for (int i = left; i <= right; i++)
-            result = min(result, i + max(helper(left, i-1), helper(i+1, right)));
-        m[left][right] = result;
-        return result;
-    }
 public:
     int getMoneyAmount(int n) {
-        m.clear();
-        return helper(1, n);
+        vector<vector<int>> dp(n+2, vector<int>(n+2, 0));
+        for (int k = 2; k <= n; k++) {
+            for (int i = 1; i+k-1 <= n; i++) {
+                dp[i][i+k-1] = INT32_MAX;
+                for (int j = i; j <= i+k-1; j++)
+                    dp[i][i+k-1] = min(dp[i][i+k-1], j + max(dp[i][j-1], dp[j+1][i+k-1]));
+            }
+        }
+        return dp[1][n];
     }
 };
 
