@@ -13,20 +13,24 @@ class Solution(object):
         :type head: Node
         :rtype: Node
         """
-        if not head:
-            return None
-
-        child = self.flatten(head.child)
-        forward = self.flatten(head.next)
-        head.child, head.next = None, None
-
-        cur = head
-        if child:
-            cur.next, child.prev = child, cur
-            while cur.next:
-                cur = cur.next
-
-        cur.next = forward
-        if forward:
-            forward.prev = cur
+        head, tail = self.helper(head)
         return head
+
+    def helper(self, head):
+        if not head:
+            return None, None
+
+        childHead, childTail = self.helper(head.child)
+        nextHead, nextTail = self.helper(head.next)
+        head.child, head.next = None, None
+        tail = head
+
+        if childHead:
+            tail.next, childHead.prev = childHead, tail
+            tail = childTail
+
+        if nextHead:
+            tail.next, nextHead.prev = nextHead, tail
+            tail = nextTail
+
+        return head, tail
