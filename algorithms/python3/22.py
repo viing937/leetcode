@@ -1,17 +1,15 @@
-class Solution:
-    # @param {integer} n
-    # @return {string[]}
-    def generateParenthesis(self, n):
-        s = set(["()"])
-        news = set()
-        for i in range(1,n):
-            for com in s:
-                for j in range(0,i*2):
-                    news.add(com[:j]+"()"+com[j:])
-            s = news.copy()
-            news.clear()
-        return list(s)
+from itertools import product
 
-solution = Solution()
-ans = solution.generateParenthesis(3)
-print(ans)
+class Solution(object):
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        dp = [set(['']) for i in range(n+1)]
+        for i in range(1, n+1):
+            dp[i] = set(['('+p+')' for p in dp[i-1]])
+            for j in range(1, i):
+                for l, r in product(dp[j], dp[i-j]):
+                    dp[i].add(l + r)
+        return list(dp[n])
