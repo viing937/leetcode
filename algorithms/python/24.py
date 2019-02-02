@@ -9,4 +9,8 @@ class Solution:
         """
         :type head: ListNode
         """
-        
+        if not head or not head.next:
+            return head
+        p, q = head, head.next
+        q.next, p.next = p, self.swapPairs(q.next)
+        return q
