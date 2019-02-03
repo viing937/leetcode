@@ -5,11 +5,7 @@ class Solution:
         :type S: int
         :rtype: int
         """
-        one = [-1]
-        for idx, n in enumerate(A):
-            if n == 1:
-                one.append(idx)
-        one.append(len(A))
+        one = [-1] + [i for i in range(len(A)) if A[i]==1] + [len(A)]
 
         rls = 0
         if S == 0:
