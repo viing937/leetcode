@@ -3,8 +3,8 @@ using namespace std;
 
 class Solution {
 public:
-    int getSum(int a, int b) {
-        int result = a ^ b, carry = a & b;
+    int getSum(unsigned int a, unsigned int b) {
+        unsigned int result = a ^ b, carry = a & b;
         while (carry) {
             a = result;
             b = carry << 1;
