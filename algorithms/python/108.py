@@ -11,11 +11,9 @@ class Solution(object):
         :type nums: List[int]
         :rtype: TreeNode
         """
-        def helper(nums):
-            if len(nums) == 0: return None
-            idx = len(nums) // 2
-            node = TreeNode(nums[idx])
-            node.left = helper(nums[:idx])
-            node.right = helper(nums[idx+1:])
-            return node
-        return helper(nums)
+        if len(nums) == 0: return None
+        idx = len(nums) // 2
+        node = TreeNode(nums[idx])
+        node.left = self.sortedArrayToBST(nums[:idx])
+        node.right = self.sortedArrayToBST(nums[idx+1:])
+        return node
