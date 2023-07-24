@@ -8,7 +8,7 @@ impl Solution {
             x1 = x2;
             x2 = (x1 + x / x1) / 2.0;
         }
-        return x2 as i32;
+        x2 as i32
     }
 }
 

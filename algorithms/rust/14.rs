@@ -24,7 +24,7 @@ impl Solution {
                 _ => break,
             }
         }
-        return solution;
+        solution
     }
 }
 

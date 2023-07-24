@@ -9,7 +9,7 @@ impl Solution {
             }
         }
         nums.resize(idx, 0);
-        return idx as i32;
+        idx as i32
     }
 }
 

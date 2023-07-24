@@ -4,8 +4,8 @@ impl Solution {
     #[allow(unused)]
     pub fn k_smallest_pairs(nums1: Vec<i32>, nums2: Vec<i32>, k: i32) -> Vec<Vec<i32>> {
         let mut heap = BinaryHeap::new();
-        for i in 0..nums1.len() {
-            heap.push((Reverse(nums1[i] + nums2[0]), i, 0));
+        for (i, num1) in nums1.iter().enumerate() {
+            heap.push((Reverse(num1 + nums2[0]), i, 0));
         }
 
         let mut pairs = Vec::new();
@@ -20,7 +20,7 @@ impl Solution {
                 None => break,
             }
         }
-        return pairs;
+        pairs
     }
 }
 

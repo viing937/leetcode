@@ -14,7 +14,7 @@ impl Solution {
             }
         }
         for i in 1..n + 1 {
-            diffs[i] = diffs[i - 1] + diffs[i];
+            diffs[i] += diffs[i - 1];
         }
         return s
             .chars()
@@ -26,7 +26,7 @@ impl Solution {
     fn char_operator(c: char, offset: i32) -> char {
         let base = c as u8 - b'a';
         let base = (base + (offset % 26 + 26) as u8) % 26;
-        return (base + b'a') as char;
+        (base + b'a') as char
     }
 }
 

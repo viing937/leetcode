@@ -6,13 +6,12 @@ impl Solution {
         for (i, edge) in edges.into_iter().enumerate() {
             scores[edge as usize] += i;
         }
-        let index = scores
+        scores
             .iter()
             .enumerate()
             .min_by(|(_, a), (_, b)| b.cmp(a))
             .map(|(i, _)| i)
-            .unwrap();
-        return index as i32;
+            .unwrap() as i32
     }
 }
 

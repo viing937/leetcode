@@ -11,7 +11,7 @@ impl Solution {
             }
             seen.insert(num, i as i32);
         }
-        return vec![];
+        vec![]
     }
 }
 

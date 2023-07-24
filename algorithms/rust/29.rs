@@ -15,7 +15,11 @@ impl Solution {
                 dividend -= divisor << i;
             }
         }
-        return if neg { -quotient } else { quotient };
+        if neg {
+            -quotient
+        } else {
+            quotient
+        }
     }
 }
 

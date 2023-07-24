@@ -6,7 +6,7 @@ impl Solution {
         }
         let mod_ = 1_000_000_000 + 7;
         let n = n as usize;
-        let mut dp = vec![vec![0 as i64; n]; 2];
+        let mut dp = vec![vec![0_i64; n]; 2];
         dp[0][0] = 1;
         dp[1][0] = 1;
         for i in 1..n {
@@ -14,7 +14,7 @@ impl Solution {
             dp[1][i] = dp[0][i - 1];
         }
         let one_side = (dp[0][n - 1] + dp[1][n - 1]) % mod_;
-        return (one_side.pow(2) % mod_) as i32;
+        (one_side.pow(2) % mod_) as i32
     }
 }
 

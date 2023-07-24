@@ -2,9 +2,8 @@ impl Solution {
     #[allow(unused)]
     pub fn length_of_last_word(s: String) -> i32 {
         s.split(' ')
-            .filter(|word| word.len() > 0)
-            .rev()
-            .next()
+            .filter(|word| !word.is_empty())
+            .next_back()
             .unwrap()
             .len() as i32
     }
